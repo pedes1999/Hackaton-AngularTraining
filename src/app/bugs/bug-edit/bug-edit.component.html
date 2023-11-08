@@ -5,18 +5,18 @@
   <button (click)="onSubmit()" mat-raised-button color="primary">Create Bug</button>
 </h1>
 <form [formGroup]="bugForm"  class="p-4 space-y-4">
-  <mat-label class="text-xl">Title</mat-label>
+  <mat-label class="text-xl"> Title<span class="text-red-600"> *</span></mat-label>
   <mat-form-field class="w-full">
     <input matInput placeholder="Title" formControlName="title">
   </mat-form-field>
 
-  <mat-label class="text-xl">Description</mat-label>
+  <mat-label class="text-xl">Description<span class="text-red-600"> *</span></mat-label>
   <mat-form-field class="w-full">
     <textarea matInput placeholder="Description" formControlName="description"></textarea>
   </mat-form-field>
 
 
-  <mat-label class="text-xl">Priority</mat-label>
+  <mat-label class="text-xl">Priority<span class="text-red-600"> *</span></mat-label>
   <mat-form-field class="w-full">
     <mat-select formControlName="priority">
       <mat-option value="Minor">Minor</mat-option>
@@ -25,7 +25,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-label class="text-xl">Reporter</mat-label>
+  <mat-label class="text-xl">Reporter <span class="text-red-600"> *</span></mat-label>
   <mat-form-field class="w-full">
     <mat-select formControlName="reporter">
       <mat-option value="QA">QA</mat-option>
@@ -34,7 +34,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-label class="text-xl">Status</mat-label>
+  <mat-label class="text-xl">Status <span class="text-red-600" *ngIf="!bugForm.controls['status'].valid">*</span></mat-label>
   <mat-form-field class="w-full">
     <mat-select formControlName="status">
       <mat-option value="">Not Selected</mat-option>
