@@ -43,11 +43,29 @@ export class BugEditComponent implements OnInit{
     if (this.bugForm.valid) {
       this.bugService.createBug(this.bugForm.value).subscribe(res => {
         this.router.navigate([''])
+        this.snackBar.open("Changes Saved Successfully!","Close",{
+          duration : 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        })
       })
     } else {
+      this.markFormGroupAsTouched(this.bugForm)
       this.snackBar.open('Form is invalid. Please fill out all required fields.', 'Close', {
         duration: 5000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
       });
     }
+  }
+
+  markFormGroupAsTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      if (control instanceof FormGroup) {
+        this.markFormGroupAsTouched(control);
+      } else {
+        control.markAsTouched();
+      }
+    });
   }
 }
