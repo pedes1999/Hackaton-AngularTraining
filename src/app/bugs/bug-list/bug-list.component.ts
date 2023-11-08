@@ -5,6 +5,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {BugService} from "../bug.service";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-bug-list',
@@ -12,16 +14,20 @@ import {Router} from "@angular/router";
   styleUrls: ['./bug-list.component.scss']
 })
 export class BugListComponent implements AfterViewInit{
-  displayedColumns: string[] = ['title', 'priority', 'reporter', 'created', 'status'];
+  displayedColumns: string[] = ['title', 'priority', 'reporter', 'created', 'status','actions'];
   bugs !:  MatTableDataSource<Bug>;
+  bugList! : Bug[];
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private service : BugService,private router : Router) {
+  constructor(private service : BugService,private router : Router,private snackBar : MatSnackBar) {
+  this.getAllBugs();
+  }
+
+  getAllBugs(){
     this.service.getAllBugs().subscribe(bugList => {
-      console.log(bugList)
+      this.bugList = bugList;
       this.bugs = new MatTableDataSource(bugList);
     })
   }
-
   ngAfterViewInit() {
    this.handleSortChanged();
   }
@@ -59,6 +65,27 @@ export class BugListComponent implements AfterViewInit{
   }
 
   newBug() {
-    this.router.navigate(['new'])
+    this.router.navigate([ 'bugs/new']);
+  }
+
+
+  edit(i : number ) {
+       const id = this.bugList[i].id;
+       this.router.navigate(['bug' , id ])
+  }
+  delete(i : number ) {
+    const id = this.bugList[i].id;
+    this.service.delete(id).pipe(
+      finalize(() => {
+        this.bugList.splice(i, 1);
+        this.bugs.data = this.bugList;
+      })
+    ).subscribe(res => {
+      this.snackBar.open('Bug with Title ' + this.bugList[i].title + ' deleted Successfully', 'Close', {
+        duration: 5000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      });
+    });
   }
 }

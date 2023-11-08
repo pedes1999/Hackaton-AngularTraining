@@ -1,0 +1,8 @@
+
+.dark-theme-table th {
+  background-color: #f44336;
+  color: #fff;
+}
+::ng-deep .dark-theme-table .mat-sort-header-arrow {
+  color: black;
+}

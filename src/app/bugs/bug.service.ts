@@ -14,7 +14,16 @@ export class BugService{
   }
 
   createBug(newBug : Bug) {
-
     return this.http.post<any>(this.endpoint , newBug);
+  }
+  editBug(id : string,editedBug : Bug) {
+    return this.http.put<any>(this.endpoint + `/${id}`, editedBug);
+  }
+  get(id : string) {
+    return this.http.get<any>(this.endpoint + `/${id}`);
+  }
+
+  delete(id : string) {
+    return this.http.delete<any>(this.endpoint + `/${id}`);
   }
 }

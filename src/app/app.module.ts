@@ -14,14 +14,21 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatCardModule} from "@angular/material/card";
+import { HeaderComponent } from './header/header.component';
+import {MatIconModule} from "@angular/material/icon";
+import { HomeComponent } from './home/home.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     BugListComponent,
-    BugEditComponent
-  ],
+    BugEditComponent,
+    HeaderComponent,
+    HomeComponent,
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,7 +40,9 @@ import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
     ReactiveFormsModule,
     MatInputModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

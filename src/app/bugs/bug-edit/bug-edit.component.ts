@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BugService} from "../bug.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
@@ -11,9 +11,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class BugEditComponent implements OnInit{
   bugForm!: FormGroup;
-  constructor(private formBuilder: FormBuilder,private bugService  : BugService,private router : Router, private snackBar: MatSnackBar) {
-
-
+  id ?: string;
+  editMode : boolean = false;
+  newMode : boolean = false;
+  constructor(private formBuilder: FormBuilder,private bugService  : BugService,private router : Router, private snackBar: MatSnackBar,private route : ActivatedRoute) {
     this.bugForm = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -22,33 +23,57 @@ export class BugEditComponent implements OnInit{
       status: [''],
       created : [new Date()]
     });
+
+    this.id = this.route.snapshot.params['id'];
+    if(this.id) {
+      this.editMode = true;
+    } else {
+      this.newMode = true;
+    }
   }
 
   ngOnInit(){
+    if(this.editMode) {
+      this.bugService.get(this.id!).subscribe(res=> {
+       this.bugForm.patchValue(res);
+      })
+    }
+
+
     this.bugForm.controls['reporter'].valueChanges.subscribe(value => {
       if (value === 'QA') {
-        // Add the "required" validator to the "Status" control
         this.bugForm.controls['status'].setValidators([Validators.required]);
         this.bugForm.controls['status'].updateValueAndValidity();
         this.bugForm.controls['status'].markAsTouched()
         console.log(this.bugForm.valid)
       } else {
-        // Remove the "required" validator from the "Status" control
         this.bugForm.controls['status'].clearValidators();
         this.bugForm.controls['status'].updateValueAndValidity();
       }
     });
+
   }
   onSubmit() {
     if (this.bugForm.valid) {
-      this.bugService.createBug(this.bugForm.value).subscribe(res => {
-        this.router.navigate([''])
-        this.snackBar.open("Changes Saved Successfully!","Close",{
-          duration : 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
+      if(!this.id) {
+        this.bugService.createBug(this.bugForm.value).subscribe(res => {
+          this.router.navigate(['bugs'])
+          this.snackBar.open("Bug created successfully!", "Close", {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          })
         })
-      })
+      } else {
+        this.bugService.editBug(this.id,this.bugForm.value).subscribe(res => {
+          this.router.navigate(['bugs'])
+          this.snackBar.open("Bug edited successfully!", "Close", {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          })
+        })
+      }
     } else {
       this.markFormGroupAsTouched(this.bugForm)
       this.snackBar.open('Form is invalid. Please fill out all required fields.', 'Close', {
@@ -67,5 +92,9 @@ export class BugEditComponent implements OnInit{
         control.markAsTouched();
       }
     });
+  }
+
+  back() {
+    this.router.navigate(['bugs']);
   }
 }
