@@ -1,0 +1,44 @@
+<h1 class="card-title text-2xl flex flex-row justify-between p-2">
+  <div class="flex flex-row p-5">
+    <div>Bug List</div>
+  </div>
+  <button mat-raised-button class="mat-primary "  (click)="newBug()">Add Bug</button>
+</h1>
+
+    <div class="mat-elevation-z2">
+
+      <table mat-table [dataSource]="bugs" matSort>
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef  mat-sort-header >Title</th>
+          <td mat-cell *matCellDef="let bug">{{ bug.title }}</td>
+        </ng-container>
+
+        <!-- Priority Column -->
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+          <td mat-cell *matCellDef="let bug">{{ bug.priority }}</td>
+        </ng-container>
+
+        <!-- Reporter Column -->
+        <ng-container matColumnDef="reporter">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header >Reporter</th>
+          <td mat-cell *matCellDef="let bug">{{ bug.reporter }}</td>
+        </ng-container>
+
+        <!-- Date Created Column -->
+        <ng-container matColumnDef="created">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header >Date Created</th>
+          <td mat-cell *matCellDef="let bug">{{ bug.created |date}}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let bug">{{ bug.status }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>

@@ -1,0 +1,44 @@
+{
+  "bugs": [
+    {
+      "id": "1",
+      "title": "bug 1",
+      "description": "This is a simple bug",
+      "priority": 1,
+      "reporter": "QA",
+      "status": "Done",
+      "created": "2022-10-27",
+      "comments": [
+        {
+          "reporter": "Fan",
+          "description": "this is just a description"
+        }
+      ]
+    },
+    {
+      "id": "6358f56cbf47a30046de24f0",
+      "title": "bug 2",
+      "description": "This is a simple bug",
+      "priority": 1,
+      "reporter": "QA",
+      "status": "Done",
+      "created": "2022-10-26",
+      "comments": [
+        {
+          "reporter": "Fan",
+          "description": "this is just a description"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "bag test",
+      "description": "this is a test description",
+      "priority": 0,
+      "reporter": "DEV",
+      "status": "For Review",
+      "created": "2022-09-30T16:32:19.595Z",
+      "comments": []
+    }
+  ]
+}
