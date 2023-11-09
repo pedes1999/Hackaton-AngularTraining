@@ -1,0 +1,57 @@
+<div class="text-2xl font-bold p-5 ml-2">Filters</div>
+<form [formGroup]="filterForm"  class="p-4 space-y-4 filter-table">
+  <div class="flex flex-wrap -mx-2">
+    <div class="w-1/5 px-2">
+      <mat-label class="text-xl">Title</mat-label>
+      <mat-form-field class="w-full mt-2">
+        <input matInput formControlName="title">
+      </mat-form-field>
+    </div>
+
+    <div class="w-1/5 px-2">
+      <mat-label class="text-xl">Priority</mat-label>
+      <mat-form-field class="w-full mt-2">
+        <mat-select formControlName="priority">
+          <mat-option value="Minor">Minor</mat-option>
+          <mat-option value="Major">Major</mat-option>
+          <mat-option value="Critical">Critical</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="w-1/5 px-2">
+      <mat-label class="text-xl">Reporter</mat-label>
+      <mat-form-field class="w-full mt-2">
+        <mat-select formControlName="reporter">
+          <mat-option value="QA">QA</mat-option>
+          <mat-option value="PO">PO</mat-option>
+          <mat-option value="DEV">DEV</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="w-1/5 px-2">
+      <mat-label class="text-xl">Date</mat-label>
+      <mat-form-field class="w-full mt-2">
+        <input matInput [matDatepicker]="picker" formControlName="created">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="w-1/5 px-2">
+      <mat-label class="text-xl">Status</mat-label>
+      <mat-form-field class="w-full mt-2">
+        <mat-select formControlName="status">
+          <mat-option value="For Review">For Review</mat-option>
+          <mat-option value="Done">Done</mat-option>
+          <mat-option value="Rejected">Rejected</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="flex flex-row justify-end">
+    <button mat-raised-button class="mat-primary" (click)="filter();"><mat-icon>filter_list_alt</mat-icon> Filter </button>
+    <button mat-raised-button class=" ml-2" (click)="clearFilters();"><mat-icon>cancel</mat-icon>Clear Filters</button>
+  </div>
+</form>
+
+

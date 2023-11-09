@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {DataSource} from "@angular/cdk/collections";
 import {Bug} from "../../dtos/bug.dto";
 import {MatTableDataSource} from "@angular/material/table";
@@ -6,18 +6,20 @@ import {BugService} from "../bug.service";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {finalize} from "rxjs";
+import {filter, finalize} from "rxjs";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-bug-list',
   templateUrl: './bug-list.component.html',
   styleUrls: ['./bug-list.component.scss']
 })
-export class BugListComponent implements AfterViewInit{
+export class BugListComponent implements OnInit,AfterViewInit{
   displayedColumns: string[] = ['title', 'priority', 'reporter', 'created', 'status','actions'];
   bugs !:  MatTableDataSource<Bug>;
   bugList! : Bug[];
   @ViewChild(MatSort) sort!: MatSort;
+  filterForm !: any;
   constructor(private service : BugService,private router : Router,private snackBar : MatSnackBar) {
   this.getAllBugs();
   }
@@ -27,6 +29,17 @@ export class BugListComponent implements AfterViewInit{
       this.bugList = bugList;
       this.bugs = new MatTableDataSource(bugList);
     })
+
+  }
+  ngOnInit(){
+    this.service.filterSubject.subscribe(filterForm => {
+      this.filterForm = filterForm;
+      if(this.filterForm) {
+        this.applyFilter();
+        return;
+      }
+      this.getAllBugs()
+    })
   }
   ngAfterViewInit() {
    this.handleSortChanged();
@@ -34,7 +47,6 @@ export class BugListComponent implements AfterViewInit{
 
   private handleSortChanged() {
     this.sort.sortChange.subscribe((onNext: { active: string; direction: string; }) => {
-
         this.bugs.data = this.sortData(this.bugs.data, onNext.active, onNext.direction);
     }
     )
@@ -87,5 +99,46 @@ export class BugListComponent implements AfterViewInit{
         horizontalPosition: 'center',
       });
     });
+  }
+
+  applyFilter() {
+    let filteredData = [...this.bugList];
+
+    // Apply filtering based on form values
+    if (this.filterForm.title) {
+      filteredData = filteredData.filter(bug => bug.title.toLowerCase().includes(this.filterForm.title.toLowerCase()));
+    }
+
+    if (this.filterForm.priority) {
+      filteredData = filteredData.filter(bug => bug.priority === this.filterForm.priority);
+    }
+
+    if (this.filterForm.reporter) {
+      filteredData = filteredData.filter(bug => bug.reporter === this.filterForm.reporter);
+    }
+
+    if (this.filterForm.created) {
+       this.convertToStringDate(this.filterForm.created);
+      filteredData = filteredData.filter(bug =>  this.convertToStringDate(bug.created) ===  this.convertToStringDate(this.filterForm.created));
+    }
+
+    if (this.filterForm.status) {
+      filteredData = filteredData.filter(bug => bug.status === this.filterForm.status);
+    }
+
+    this.bugs.data = filteredData;
+    console.log(this.bugs.data)
+  }
+
+  convertToStringDate(date : any) : string {
+    const dateObject = new Date(date);
+    const year = dateObject.getFullYear();
+    const month = dateObject.toLocaleString('default', { month: 'long' }); // Convert month to full month name
+    const day = dateObject.getDate();
+
+
+    return  `${day} ${month} ${year}`;
+
+
   }
 }

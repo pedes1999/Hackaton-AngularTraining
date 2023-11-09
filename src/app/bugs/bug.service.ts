@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Bug} from "../dtos/bug.dto";
+import {Subject} from "rxjs";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BugService{
   endpoint = 'http://localhost:3000/bugs'
+  filterSubject : Subject<any> = new Subject<FormGroup>();
   constructor(private http : HttpClient) { }
+
 
   getAllBugs() {
     return this.http.get<any>(this.endpoint);

@@ -18,6 +18,9 @@ import {MatCardModule} from "@angular/material/card";
 import { HeaderComponent } from './header/header.component';
 import {MatIconModule} from "@angular/material/icon";
 import { HomeComponent } from './home/home.component';
+import { FilterComponentComponent } from './bugs/filter-component/filter-component.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 
@@ -28,6 +31,7 @@ import { HomeComponent } from './home/home.component';
     BugEditComponent,
     HeaderComponent,
     HomeComponent,
+    FilterComponentComponent,
    ],
   imports: [
     BrowserModule,
@@ -42,7 +46,9 @@ import { HomeComponent } from './home/home.component';
     MatSelectModule,
     MatSnackBarModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

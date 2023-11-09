@@ -1,10 +1,15 @@
 
-<div class="flex justify-end p-5">
-<button mat-raised-button class="mat-warn"  (click)="newBug()"><mat-icon>add</mat-icon> Create New Bug </button>
-</div>
-    <div class="mat-elevation-z2">
 
+
+    <div class="mat-elevation-z2">
+      <app-filter-component></app-filter-component>
+
+      <div class="flex justify-between p-5">
+        <div class="text-2xl font-bold p-3">Bugs</div>
+        <button mat-raised-button class="mat-warn"  (click)="newBug()"><mat-icon>add</mat-icon> Create New Bug </button>
+      </div>
       <table mat-table [dataSource]="bugs" matSort class="dark-theme-table">
+
         <!-- Title Column -->
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef  mat-sort-header >Title</th>
