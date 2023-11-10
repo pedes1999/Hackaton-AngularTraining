@@ -130,15 +130,11 @@ export class BugListComponent implements OnInit,AfterViewInit{
    * @param i - The index of the bug to be deleted
    */
   delete(i : number ) {
-    const currentIndex = this.paginator.pageIndex * this.paginator.pageSize + i;
     const id = this.bugList[i].id;
     this.service.delete(id).pipe(
       finalize(() => {
         this.bugList.splice(i, 1);
         this.bugs.data = this.bugList;
-        if (this.bugList.length === 0 && currentIndex > 0) {
-          this.paginator.pageIndex = Math.floor(currentIndex / this.paginator.pageSize);
-        }
       })
     ).subscribe(res => {
       this.snackBar.open('Bug with Title ' + this.bugList[i].title + ' deleted Successfully', 'Close', {

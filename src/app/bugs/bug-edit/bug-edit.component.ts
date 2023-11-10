@@ -104,6 +104,7 @@ export class BugEditComponent implements OnInit, CanComponentDeactivate {
     if (this.bugForm.valid) {
       if (!this.id) {
         this.bugService.createBug(this.bugForm.value).subscribe(res => {
+          this.bugForm.markAsPristine();
           this.router.navigate(['bugs'])
           this.snackBar.open("Bug created successfully!", "Close", {
             duration: 5000,
@@ -113,6 +114,7 @@ export class BugEditComponent implements OnInit, CanComponentDeactivate {
         })
       } else {
         this.bugService.editBug(this.id, this.bugForm.value).subscribe(res => {
+          this.bugForm.markAsPristine();
           this.router.navigate(['bugs'])
           this.snackBar.open("Bug edited successfully!", "Close", {
             duration: 5000,
