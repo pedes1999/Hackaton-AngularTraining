@@ -1,10 +1,10 @@
 <div class="flex justify-between p-5">
   <h1 class="text-4xl">{{ newMode ? 'Create Bug' : 'Edit Bug' }}</h1>
   <div class="flex space-x-2">
-    <button mat-raised-button class="mat-warn" (click)="onSubmit()">
+    <button mat-raised-button class="button" (click)="onSubmit()">
       <mat-icon>save</mat-icon>{{ newMode ? 'Create Bug' : 'Save Bug' }}
     </button>
-    <button mat-raised-button class="mat-warn" (click)="back()">
+    <button mat-raised-button class="button" (click)="back()">
       <mat-icon>arrow_back</mat-icon>Back
     </button>
   </div>
@@ -61,3 +61,4 @@
     </div>
   </div>
 </form>
+

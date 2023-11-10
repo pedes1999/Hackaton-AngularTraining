@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BugService} from "../bug.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -20,6 +20,7 @@ export class BugEditComponent implements OnInit{
       description: ['', Validators.required],
       priority: ['', Validators.required],
       reporter: ['', Validators.required],
+      comments : [this.formBuilder.array([])],
       status: [''],
       created : [new Date()]
     });
@@ -27,6 +28,7 @@ export class BugEditComponent implements OnInit{
     this.id = this.route.snapshot.params['id'];
     if(this.id) {
       this.editMode = true;
+
     } else {
       this.newMode = true;
     }
@@ -97,4 +99,5 @@ export class BugEditComponent implements OnInit{
   back() {
     this.router.navigate(['bugs']);
   }
+
 }

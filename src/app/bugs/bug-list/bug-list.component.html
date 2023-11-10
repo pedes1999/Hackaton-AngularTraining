@@ -6,7 +6,7 @@
 
       <div class="flex justify-between p-5">
         <div class="text-2xl font-bold p-3">Bugs</div>
-        <button mat-raised-button class="mat-warn"  (click)="newBug()"><mat-icon>add</mat-icon> Create New Bug </button>
+        <button mat-raised-button class="button"  (click)="newBug()"><mat-icon>add</mat-icon> Create New Bug </button>
       </div>
       <table mat-table [dataSource]="bugs" matSort class="dark-theme-table">
 
@@ -43,8 +43,8 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <button mat-raised-button class="mat-warn"   (click)="edit(i)"><mat-icon style="margin-right: 0;">edit</mat-icon></button>
-            <button mat-raised-button class="mat-warn ml-1"  (click)="delete(i)"><mat-icon style="margin-right: 0;" >delete</mat-icon></button>
+            <button mat-raised-button class="button"   (click)="edit(i)"><mat-icon style="margin-right: 0;">edit</mat-icon></button>
+            <button mat-raised-button class="button ml-1"  (click)="delete(i)"><mat-icon style="margin-right: 0;" >delete</mat-icon></button>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

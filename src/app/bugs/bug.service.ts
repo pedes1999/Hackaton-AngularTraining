@@ -36,4 +36,7 @@ export class BugService{
     return this.http.get<any>(url);
   }
 
+  addComment(id: string | undefined, value:any) {
+    return this.http.put<any>(this.endpoint + `/${id}`, value);
+  }
 }
