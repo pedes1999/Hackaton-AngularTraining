@@ -21,8 +21,8 @@ export class BugListComponent implements OnInit,AfterViewInit{
   bugList! : Bug[];
   @ViewChild(MatSort) sort!: MatSort;
   filterForm !: any;
-  pageSizeOptions: number[] = [5, 10, 15];
-  pageSize = 5;
+  pageSizeOptions: number[] = [10, 15, 20];
+  pageSize = 10;
   currentPage = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -94,11 +94,15 @@ export class BugListComponent implements OnInit,AfterViewInit{
        this.router.navigate(['bug' , id ])
   }
   delete(i : number ) {
+    const currentIndex = this.paginator.pageIndex * this.paginator.pageSize + i;
     const id = this.bugList[i].id;
     this.service.delete(id).pipe(
       finalize(() => {
         this.bugList.splice(i, 1);
         this.bugs.data = this.bugList;
+        if (this.bugList.length === 0 && currentIndex > 0) {
+          this.paginator.pageIndex = Math.floor(currentIndex / this.paginator.pageSize);
+        }
       })
     ).subscribe(res => {
       this.snackBar.open('Bug with Title ' + this.bugList[i].title + ' deleted Successfully', 'Close', {
@@ -143,11 +147,7 @@ export class BugListComponent implements OnInit,AfterViewInit{
     const year = dateObject.getFullYear();
     const month = dateObject.toLocaleString('default', { month: 'long' }); // Convert month to full month name
     const day = dateObject.getDate();
-
-
     return  `${day} ${month} ${year}`;
-
-
   }
 
   onPageChange(event: PageEvent) {

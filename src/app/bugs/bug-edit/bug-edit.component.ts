@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BugService} from "../bug.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {CommentDto} from "../../dtos/comment.dto";
 
 @Component({
   selector: 'app-bug-edit',
@@ -12,6 +13,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class BugEditComponent implements OnInit{
   bugForm!: FormGroup;
   id ?: string;
+  commentsForm !: FormGroup;
   editMode : boolean = false;
   newMode : boolean = false;
   constructor(private formBuilder: FormBuilder,private bugService  : BugService,private router : Router, private snackBar: MatSnackBar,private route : ActivatedRoute) {
@@ -20,11 +22,14 @@ export class BugEditComponent implements OnInit{
       description: ['', Validators.required],
       priority: ['', Validators.required],
       reporter: ['', Validators.required],
-      comments : [this.formBuilder.array([])],
+      comments: this.formBuilder.array([
+        this.formBuilder.group({
+          name: '',
+          description: ''
+        })]),
       status: [''],
       created : [new Date()]
     });
-
     this.id = this.route.snapshot.params['id'];
     if(this.id) {
       this.editMode = true;
@@ -33,12 +38,33 @@ export class BugEditComponent implements OnInit{
       this.newMode = true;
     }
   }
-
+  get comments(): FormArray {
+    return this.bugForm.get('comments') as FormArray;
+  }
+  set comments(data:any){
+    this.bugForm.get('comments')?.patchValue(data);
+  }
   ngOnInit(){
+
     if(this.editMode) {
       this.bugService.get(this.id!).subscribe(res=> {
-       this.bugForm.patchValue(res);
-      })
+        this.bugForm.patchValue(res);
+
+        // Clear existing comments before pushing new ones
+        while (this.comments.length !== 0) {
+          this.comments.removeAt(0);
+        }
+    if(res.comments) {
+      res.comments.forEach((comment: CommentDto) => {
+        const commentFormGroup = this.formBuilder.group({
+          description: comment.description,
+          name: comment.name,
+        });
+        this.comments.push(commentFormGroup);
+      });
+    }
+      });
+
     }
 
 
@@ -99,5 +125,22 @@ export class BugEditComponent implements OnInit{
   back() {
     this.router.navigate(['bugs']);
   }
+  addComment() {
+    const commentsArray = this.comments;
+    const newComment = this.formBuilder.group({
+      name: '',
+      description: ''
+    });
+    commentsArray.push(newComment);
 
+  }
+  saveComment(i : number){
+    this.bugService.editBug(this.id!,this.bugForm.value).subscribe(res => {
+      this.snackBar.open("Comment saved successfully!", "Close", {
+        duration: 5000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      })
+    });
+  }
 }

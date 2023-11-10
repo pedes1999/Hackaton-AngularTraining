@@ -1,5 +1,5 @@
 <div class="flex justify-between p-5">
-  <h1 class="text-4xl">{{ newMode ? 'Create Bug' : 'Edit Bug' }}</h1>
+  <div class="text-2xl font-bold ">{{ newMode ? 'Create Bug' : 'Edit Bug' }}</div>
   <div class="flex space-x-2">
     <button mat-raised-button class="button" (click)="onSubmit()">
       <mat-icon>save</mat-icon>{{ newMode ? 'Create Bug' : 'Save Bug' }}
@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<form [formGroup]="bugForm"  class="p-4 space-y-4">
+<form [formGroup]="bugForm"  class="p-4 space-y-4 bg-gray-100">
   <div class="flex flex-wrap -mx-2">
     <div class="w-1/2 px-2">
       <mat-label class="text-xl">Title<span class="text-red-600"> *</span></mat-label>
@@ -61,4 +61,39 @@
     </div>
   </div>
 </form>
+
+<ng-container *ngIf="editMode">
+<div class="flex justify-between p-2">
+  <div class="text-2xl font-bold ">Comments</div>
+  <button mat-raised-button class="button" (click)="addComment()">
+    <mat-icon>add</mat-icon>Add Comment
+  </button>
+</div>
+<form [formGroup]="bugForm" autocomplete="off" class="bg-gray-200 p-4 space-y-4">
+  <div class="flex flex-wrap -mx-2">
+    <ng-container formArrayName="comments">
+      <div *ngFor="let commentCtrl of comments.controls; let i = index" [formGroupName]="i" class="flex w-full">
+        <div class="w-full px-2">
+          <mat-label class="text-xl">Description</mat-label>
+          <mat-form-field class="w-full">
+            <input matInput placeholder="Description" formControlName="description">
+          </mat-form-field>
+        </div>
+        <div class="w-full px-2">
+          <mat-label class="text-xl">Name</mat-label>
+          <mat-form-field class="w-full">
+            <input matInput placeholder="Name" formControlName="name" >
+          </mat-form-field>
+        </div>
+        <div class="flex justify-end w-1/3">
+          <button mat-raised-button class="button mt-10" (click)="saveComment(i)">
+            <mat-icon>save</mat-icon>Save Comment
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</form>
+</ng-container>
+
 

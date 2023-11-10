@@ -1,4 +1,4 @@
-interface Comment {
-  reporter: string;
+export interface CommentDto {
+  name: string;
   description: string;
 }

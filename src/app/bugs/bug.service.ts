@@ -13,9 +13,6 @@ export class BugService{
   constructor(private http : HttpClient) { }
 
 
-  getAllBugs() {
-    return this.http.get<any>(this.endpoint);
-  }
 
   createBug(newBug : Bug) {
     return this.http.post<any>(this.endpoint , newBug);
@@ -36,7 +33,4 @@ export class BugService{
     return this.http.get<any>(url);
   }
 
-  addComment(id: string | undefined, value:any) {
-    return this.http.put<any>(this.endpoint + `/${id}`, value);
-  }
 }

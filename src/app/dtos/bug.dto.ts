@@ -6,5 +6,5 @@ export interface Bug {
   reporter: string;
   status: string;
   created: string;
-  comments: Comment[];
+  comments: any;
 }
