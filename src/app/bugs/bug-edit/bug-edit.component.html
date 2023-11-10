@@ -69,7 +69,7 @@
     <mat-icon>add</mat-icon>Add Comment
   </button>
 </div>
-<form [formGroup]="bugForm" autocomplete="off" class="bg-gray-200 p-4 space-y-4">
+<form [formGroup]="bugForm" autocomplete="off" class=" p-4 space-y-4">
   <div class="flex flex-wrap -mx-2">
     <ng-container formArrayName="comments">
       <div *ngFor="let commentCtrl of comments.controls; let i = index" [formGroupName]="i" class="flex w-full">
