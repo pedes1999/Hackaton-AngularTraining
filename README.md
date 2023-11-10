@@ -9,8 +9,13 @@ navigate to src folder and run command  : json-server --watch db.json
 Run npm install to install node modules
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-Bug Table
-![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/326d8584-ad5e-443c-bbeb-9001cbf5f433)
+Home Page
+![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/e0203220-b598-4bf0-a340-b8fbe8d594d4)
 
-Create Bug
-![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/4f71246c-f836-49d6-9666-ca690460c5d1)
+
+Bug List And Filters 
+![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/229220df-0451-4c17-b1e9-f88d8a2cce2a)
+
+
+Create / Edit Bug w/ comments
+![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/21a51c16-aad4-41d4-9e36-95c08413a58f)
