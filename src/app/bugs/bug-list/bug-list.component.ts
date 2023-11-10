@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {filter, finalize} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-bug-list',
@@ -20,17 +21,23 @@ export class BugListComponent implements OnInit,AfterViewInit{
   bugList! : Bug[];
   @ViewChild(MatSort) sort!: MatSort;
   filterForm !: any;
+  pageSizeOptions: number[] = [5, 10, 15];
+  pageSize = 5;
+  currentPage = 0;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(private service : BugService,private router : Router,private snackBar : MatSnackBar) {
   this.getAllBugs();
   }
 
   getAllBugs(){
-    this.service.getAllBugs().subscribe(bugList => {
+    this.service.getAllBugsPaginated(0, this.pageSize,'title,asc').subscribe((bugList) => {
       this.bugList = bugList;
       this.bugs = new MatTableDataSource(bugList);
-    })
-
+      this.bugs.paginator = this.paginator;
+    });
   }
+
   ngOnInit(){
     this.service.filterSubject.subscribe(filterForm => {
       this.filterForm = filterForm;
@@ -82,7 +89,8 @@ export class BugListComponent implements OnInit,AfterViewInit{
 
 
   edit(i : number ) {
-       const id = this.bugList[i].id;
+    const indexInAllBugs = this.currentPage * this.pageSize + i;
+    const id = this.bugList[indexInAllBugs].id;
        this.router.navigate(['bug' , id ])
   }
   delete(i : number ) {
@@ -140,5 +148,14 @@ export class BugListComponent implements OnInit,AfterViewInit{
     return  `${day} ${month} ${year}`;
 
 
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage  = event.pageIndex;
+    const pageSize = event.pageSize;
+    const sort = 'title,desc';
+    this.service.getAllBugsPaginated(this.currentPage, pageSize,sort).subscribe(bugList => {
+      this.bugs.data = bugList;
+    });
   }
 }

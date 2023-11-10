@@ -21,6 +21,8 @@ import { HomeComponent } from './home/home.component';
 import { FilterComponentComponent } from './bugs/filter-component/filter-component.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -32,6 +34,7 @@ import {MatNativeDateModule} from "@angular/material/core";
     HeaderComponent,
     HomeComponent,
     FilterComponentComponent,
+    FooterComponent,
    ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatCardModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

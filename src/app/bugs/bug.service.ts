@@ -30,4 +30,10 @@ export class BugService{
   delete(id : string) {
     return this.http.delete<any>(this.endpoint + `/${id}`);
   }
+
+  getAllBugsPaginated(page: number, pageSize: number,sort : string) {
+    const url = `${this.endpoint}?_sort=${sort}&page=${page}&size=${pageSize}`;
+    return this.http.get<any>(url);
+  }
+
 }
