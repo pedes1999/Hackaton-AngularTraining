@@ -86,8 +86,11 @@
           </mat-form-field>
         </div>
         <div class="flex justify-end w-1/3">
-          <button mat-raised-button class="button mt-10" (click)="saveComment(i)">
-            <mat-icon>save</mat-icon>Save Comment
+          <button mat-raised-button class="button mt-10" (click)="deleteComment(i)">
+            <mat-icon>cancel</mat-icon>Delete
+          </button>
+          <button mat-raised-button class="button mt-10 ml-2" (click)="saveComment(i)">
+            <mat-icon>save</mat-icon>Save
           </button>
         </div>
       </div>

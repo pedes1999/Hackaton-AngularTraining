@@ -171,6 +171,7 @@ export class BugEditComponent implements OnInit, CanComponentDeactivate {
    */
   saveComment(i: number) {
     this.bugService.editBug(this.id!, this.bugForm.value).subscribe(res => {
+      this.comments.markAsPristine();
       this.snackBar.open("Comment saved successfully!", "Close", {
         duration: 5000,
         verticalPosition: 'top',
@@ -178,4 +179,16 @@ export class BugEditComponent implements OnInit, CanComponentDeactivate {
       })
     });
   }
+  deleteComment(i: number) {
+    this.comments.removeAt(i);
+    this.bugService.editBug(this.id!, this.bugForm.value).subscribe(res => {
+      this.comments.markAsPristine();
+      this.snackBar.open("Comment Deleted successfully!", "Close", {
+        duration: 5000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      })
+    });
+  }
+
 }
