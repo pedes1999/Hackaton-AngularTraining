@@ -168,7 +168,7 @@ export class BugListComponent implements OnInit,AfterViewInit{
       filteredData = filteredData.filter(bug =>  this.convertToStringDate(bug.created) ===  this.convertToStringDate(this.filterForm.created));
     }
 
-    if (this.filterForm.status) {
+    if (this.filterForm.status || this.filterForm.status === '') {
       filteredData = filteredData.filter(bug => bug.status === this.filterForm.status);
     }
 
