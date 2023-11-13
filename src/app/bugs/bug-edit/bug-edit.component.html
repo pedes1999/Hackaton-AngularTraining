@@ -72,7 +72,7 @@
 <form [formGroup]="bugForm" autocomplete="off" class=" p-4 space-y-4">
   <div class="flex flex-wrap -mx-2">
     <ng-container formArrayName="comments">
-      <div *ngFor="let commentCtrl of comments.controls; let i = index" [formGroupName]="i" class="flex w-full">
+      <div *ngFor="let commentCtrl of comments.controls; let i = index" [formGroupName]="i" class="flex w-full comment-container">
         <div class="w-full px-2">
           <mat-label class="text-xl">Description</mat-label>
           <mat-form-field class="w-full">
