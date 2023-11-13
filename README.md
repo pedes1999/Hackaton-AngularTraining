@@ -1,5 +1,6 @@
 # HackathonProject
-
+Bug tracking application which was implemented during the training of Angular by CodeHub.
+The specific requirements are included inside the requirements folder.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
 
 ## Setting up Json-server
