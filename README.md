@@ -10,12 +10,11 @@ Run npm install to install node modules
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 Home Page
-![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/e0203220-b598-4bf0-a340-b8fbe8d594d4)
 
+![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/06cba7cf-3f76-469f-8979-017014c9204e)
 
 Bug List And Filters 
-![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/229220df-0451-4c17-b1e9-f88d8a2cce2a)
-
+![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/69ca688a-548a-4e74-ba2a-a02a7f92f34d)
 
 Create / Edit Bug w/ comments
-![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/21a51c16-aad4-41d4-9e36-95c08413a58f)
+![image](https://github.com/pedes1999/Hackaton-AngularTraining/assets/51210446/70ee2844-5a51-4275-8d6d-55575f481d76)
